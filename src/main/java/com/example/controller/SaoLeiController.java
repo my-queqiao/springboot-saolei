@@ -3,6 +3,10 @@ package com.example.controller;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.logging.log4j2.Log4J2LoggingSystem;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,8 +26,8 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping("")
 public class SaoLeiController {
+	Logger logger = LoggerFactory.getLogger(getClass());
 	//废弃
-	
 	@RequestMapping("saolei")
 	public String saolei(){
 		return "saolei4444";
@@ -80,6 +84,7 @@ public class SaoLeiController {
 		more(leis,grade);
 		//4、测试，返回给前端，展示看看
 		json.put("leis", leis);
+		logger.error("获得雷区数据");
 		return json;
 	}
 	/**

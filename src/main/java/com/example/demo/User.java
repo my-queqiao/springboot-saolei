@@ -1,6 +1,8 @@
 package com.example.demo;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 	private Integer id;
 	private String name;
 	private Integer age;
@@ -26,6 +28,10 @@ public class User {
 		this.id = id;
 		this.name = name;
 		this.age = age;
+	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", age=" + age + "]";
 	}
 	
 }

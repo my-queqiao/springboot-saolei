@@ -14,7 +14,7 @@
 			<tr>
 				<td>${user.id}</td>
 				<td>${user.name}</td>
-				<td>110</td>
+				<td>200</td>
 			</tr>
 		</#list>
 	</table>

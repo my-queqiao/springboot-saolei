@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.annotation.SecurityIgnoreHandler;
 import com.example.biz.LiuyanBiz;
 import com.example.pojo.Liuyan;
 @Controller
@@ -23,13 +24,13 @@ public class LiuyanSaoleiController {
 	private LiuyanBiz liuyanBiz;
 	
 	
-	
+	@SecurityIgnoreHandler
 	@RequestMapping("toLiuyanSaolei")
 	public String toLiuyan(){
 			return "liuyanSaolei";
 	}
 	
-	
+	@SecurityIgnoreHandler
 	@RequestMapping("liuyanSaolei")
 	@ResponseBody
 	public JSONObject liuyan(String liuyan){

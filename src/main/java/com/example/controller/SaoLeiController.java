@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.annotation.SecurityIgnoreHandler;
 import com.example.pojo.Lei;
 
 import net.sf.json.JSONObject;
@@ -35,7 +36,7 @@ public class SaoLeiController {
 	/**
 	 * 每行30个，共16行，共480个方块。雷的数量99
 	 */
-	
+	@SecurityIgnoreHandler
 	@RequestMapping("getLeis")
 	@ResponseBody
 	public JSONObject sl(HttpSession session,int grade){
@@ -90,6 +91,7 @@ public class SaoLeiController {
 	/**
 	 * 计算周围8个方块中雷的个数，只存储周围有雷的方块的id.
 	 */
+	@SecurityIgnoreHandler
 	public void more(List<Lei> leis,int grade){
 		/*private int roundNum;//周围雷的个数。包括0个
 		private String leiIds;//周围雷的id。用,隔开

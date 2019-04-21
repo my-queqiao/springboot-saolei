@@ -14,7 +14,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @org.springframework.boot.autoconfigure.SpringBootApplication
 @EnableScheduling
 @EnableCaching
-@MapperScan("com.example.mappers") //扫描mybatis映射文件
+/*	扫描mybatis映射文件？经过测试，扫描的应该是mapper类，否则其不能放入spring容器
+ *	但是xml文件需要和mapper类在同一个包下
+ *	如果不在同一个包下，就需要配置文件中指出xml文件的位置。
+ *	mybatis.mapper-locations=com/example/mappers/xml/*.xml
+ */
+@MapperScan("com.example.mappers")
 public class SpringBootApplication extends SpringBootServletInitializer{
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {

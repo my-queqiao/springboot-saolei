@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 //@Component
 @RabbitListener(
 		//bindings是@RabbitListener的一个字段属性（类型是@QueueBinding），等号右边显然是为该字段赋值。注解不用new
-		bindings=@QueueBinding( 
+		bindings=@QueueBinding(
 				value=@Queue(value="${mq.config.queue.info}",autoDelete="true"),
 				exchange=@Exchange(value="${mq.config.exchange}",type=ExchangeTypes.DIRECT),
 				key= {"${mq.config.queue.info.routing.key}"}

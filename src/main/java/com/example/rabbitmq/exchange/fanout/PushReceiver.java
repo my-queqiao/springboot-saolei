@@ -9,7 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 /**
- * 服务接收者
+ * 	服务接收者(具体的接收方法，一个方法只能从一个队列中接收消息。 如果一个交换器绑定了多个队列，那么每一个队列都需要指定一个独立的方法接收。 )
  * @author tom
  *
  */

@@ -1,69 +1,87 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>java在线扫雷</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-	<meta name="description" 
-		content="扫雷是一款大众类的益智小游戏，于1992年发行。游戏目标是在最短的时间内根据点击格子出现的数字找出所有非雷格子，同时避免踩雷，踩到一个雷即全盘皆输。">
+    	<meta charset="utf-8" />
+    	<meta name="baidu-site-verification" content="uzOhkR1Gj8" />
+        <title>java在线扫雷</title>
+        <meta name="description" 
+        content="扫雷是一款大众类的益智小游戏，于1992年发行。游戏目标是在最短的时间内根据点击格子出现的数字找出所有非雷格子，同时避免踩雷，踩到一个雷即全盘皆输。">
 </head>
 <style type="text/css">
-
+@media screen and (max-width: 1400px) { /*当屏幕尺寸，小于1400px时，应用下面的CSS样式*/
+	#leis{
+		position: relative;margin-left: 41.5%;top: 22%;height: 400px;width: 750px;
+	}
+	#leiShuliang{
+		margin-left:41.5%;position: relative;top: 17%;color:aliceblue;font-family: 仿宋;float: left;
+	}
+	#jishi{
+		margin-left:51%;position: relative;top: 17%;color:aliceblue;font-family: 仿宋;
+	}
+	#shuaxin{
+		position:absolute;margin-left: 49%;top: 22%;
+	}
+}
+@media screen and (min-width: 1400px) { /*当屏幕尺寸，大于1400px时，应用下面的CSS样式*/
+	#leis{
+		position: relative;margin-left: 42%;top: 22%;height: 400px;width: 750px;
+	}
+	#leiShuliang{
+		margin-left:42%;position: relative;top: 17%;color:aliceblue;font-family: 仿宋;float: left;
+	}
+	#jishi{
+		margin-left:49%;position: relative;top: 17%;color:aliceblue;font-family: 仿宋;
+	}
+	#shuaxin{
+		position:absolute;margin-left: 47%;top: 22%;
+	}
+}
 </style>
 <body onselectstart="return false" style="background-color: #282C34;"><!-- 该属性阻止html双击选中事件 -->
-
-	<div class="container-fluid"><!--全屏-->
-		<div class="row">
-		    <div class="text-right"><!-- 居右 -->
-			    <a href="toLiuyanSaolei" target="_blank"
-					onmousemove='move2(this);' onmouseout='out2(this);' 
-								style="color: #129FD2;font-family: 仿宋;font-size: 20px;">
-									<
-								</a>
-		    </div>
+		
+		<a href="toLiuyanSaolei" target="_blank"
+		onmousemove='move2(this);' onmouseout='out2(this);' 
+					style="position: absolute;right: 0%;top: 5%;color: #129FD2;font-family: 仿宋;font-size: 20px;">
+						<
+					</a>
+						<!--  cursor:pointer;
+						<div style="position:absolute;margin-left: 80%;top: 30%;color: blue;font-family: 仿宋;">
+							自定义地雷数量：<input id="number" style="width: 15%;" value="99" /><br />
+							<input type="button" onclick="sendNumber();" value="确认" /><br/>
+							<span style="color: #129FD2;">提示1：格子总数不变，为扫雷高级标准的480个</span><br/>
+							<span style="color: #129FD2;">提示2：地雷数量可变，默认是99个</span>
+						</div>-->
+						
+					<div style="position:absolute;margin-left: 80%;top: 30%;color: blue;font-family: 仿宋;">
+						<input style="background-color: #282C34;" value="初级" onclick="jibie(1);" type="button"/><br>
+						<input style="background-color: #282C34;" value="中级" onclick="jibie(2);" type="button"/><br>
+						<input style="background-color: #282C34;" value="高级" onclick="jibie(3);" type="button"/>
+					</div>
+						
+						<div id="shuaxin" style="">
+						<img style='width: 25px;height: 25px;' src='img/76.jpg'/>
+						</div>
+		<div id="jieshu" style="position: absolute;margin-left: 45%;top: 15%;color:red;font-family: 仿宋;">
+			&nbsp&nbsp
 		</div>
-		<br/>
-		<div class="row">
-			<div id="jieshu" class="text-center" style="color:red;font-family: 仿宋;">
-				&nbsp&nbsp
-			</div>
+		<div id="leiShuliang" style="">
+			剩余数量：0
 		</div>
-		<div class="row ">
-				<div id="leiShuliang" class="col-xs-2 col-md-offset-4" style="color:red;font-family: 仿宋	;	">
-					数量：0
-				</div>
-				<div id="shuaxin" class="col-xs-1" style="margin-left: -1.5%;">
-					<img style='width: 25px;height: 25px;' src='img/76.jpg'/>
-				</div>
-				<div id="jishi" class="col-xs-2" style="color:red;font-family: 仿宋;">
-					已耗时：0秒
-				</div>
+		<div id="jishi" style="">
+			已耗时：0秒
 		</div>
-		<div class="row" style="height: 225px;">
-			<div id="leis" class="center-block" style="color: blue;font-family: 仿宋;">
-					<!-- 展示雷区页面 -->
-			</div>
-			<div class="col-xs-2 col-xs-offset-10" style="color: blue;font-family: 仿宋  ;   margin-top: -15%;">
-				<input style="background-color: #282C34;" value="初级" onclick="jibie(1);" type="button"/><br>
-				<input style="background-color: #282C34;" value="中级" onclick="jibie(2);" type="button"/><br>
-				<input style="background-color: #282C34;" value="高级" onclick="jibie(3);" type="button"/>
-			</div>
+		
+		<div id="leis" style="" >
+			<!-- 展示雷区页面 -->
 		</div>
-		<br>
-		<br>
-		<br>
-		<div class="row" style="    margin-top: 15%;">
-				<div id="" class="text-center">
-					<a style="color: aliceblue;" href="http://www.miitbeian.gov.cn" target="_blank">京ICP备18060161-1</a>
-				</div>
+		<div id="" style="position: relative;margin-left: 45%;top: 25%;" >
+			<a style="color: aliceblue;" href="http://www.miitbeian.gov.cn" target="_blank">京ICP备18060161</a>
 		</div>
-	</div>
 </body>
 </html>
+
+<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+	
 <script>
 
 function move2(ob){
@@ -90,7 +108,7 @@ var interval = setInterval(function(){
 		if(grade == 1) {//宽度230px
 			$("#leis").width(230);
 			//样式
-			/*if(screen.width < 1400){
+			if(screen.width < 1400){
 				$("#leis").css("margin-left","41.5%");
 				$("#leiShuliang").css("margin-left","41.5%");
 				$("#jishi").css("margin-left","51%");
@@ -100,12 +118,12 @@ var interval = setInterval(function(){
 				$("#leiShuliang").css("margin-left","42%");
 				$("#jishi").css("margin-left","49%");
 				$("#shuaxin").css("margin-left","47%");
-			}*/
+			}
 		}
 		if(grade == 2) {
 			$("#leis").width(400);
 			//样式
-			/*if(screen.width < 1400){
+			if(screen.width < 1400){
 				$("#leis").css("margin-left","35%");
 				$("#leiShuliang").css("margin-left","35%");
 				$("#jishi").css("margin-left","57%");
@@ -115,12 +133,12 @@ var interval = setInterval(function(){
 				$("#leiShuliang").css("margin-left","38%");
 				$("#jishi").css("margin-left","54%");
 				$("#shuaxin").css("margin-left","47.5%");
-			}*/
+			}
 		}
 		if(grade == 3) {
 			$("#leis").width(750);
 			//样式
-			/*if(screen.width < 1400){
+			if(screen.width < 1400){
 				$("#leis").css("margin-left","22%");
 				$("#leiShuliang").css("margin-left","22%");
 				$("#jishi").css("margin-left","70%");
@@ -130,7 +148,7 @@ var interval = setInterval(function(){
 				$("#leiShuliang").css("margin-left","30%");
 				$("#jishi").css("margin-left","64%");
 				$("#shuaxin").css("margin-left","48%");
-			}*/
+			}
 		}
 		clearInterval(interval);//结束上一次计时
 		jishi = 0;//重新从0计时

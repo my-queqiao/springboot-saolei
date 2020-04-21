@@ -1,9 +1,12 @@
 package com.example.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
@@ -42,6 +45,14 @@ public class LiuyanSaoleiController {
 		json.put("result", true);
 		json.put("msg", "留言成功");
 		return json;
+	}
+	@SecurityIgnoreHandler
+	@RequestMapping("liuyanSaolei2")
+	@ResponseBody
+	public void liuyan2(HttpServletResponse response) throws IOException{
+		String html = "<div style='color:green'>success</div>";
+        PrintWriter pw = response.getWriter();
+        pw.println(html);
 	}
 	
 	

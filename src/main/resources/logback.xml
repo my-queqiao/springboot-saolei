@@ -19,7 +19,8 @@
            stdout将日志信息输出到控制上，为方便开发测试使用
     -->
     <contextName>SpringBootDemo</contextName>
-    <!-- <property name="LOG_PATH" value="D:\\JavaWebLogs" />${catalina.base} -->
+    <!-- <property name="LOG_PATH" value="D:\\JavaWebLogs" />${catalina.base} 
+    	linux下，路径大概要用 ../logs -->
     <property name="LOG_PATH" value="${user.dir}/logs" />
     <!--设置系统日志目录-->
     <property name="APPDIR" value="SpringBootDemo" />
@@ -130,10 +131,10 @@
     <logger name="org.hibernate" level="WARN" />
 
     <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="FILEERROR" />
-        <appender-ref ref="FILEWARN" />
-        <appender-ref ref="FILEINFO" />
+        <!-- <appender-ref ref="FILEWARN" />
+        <appender-ref ref="FILEINFO" /> -->
 
         <!-- 生产环境将请stdout,testfile去掉 -->
         <appender-ref ref="STDOUT" />

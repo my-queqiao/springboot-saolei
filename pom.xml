@@ -5,7 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.4.RELEASE</version>
+		<version>2.1.4.RELEASE</version>  <!-- 据说不兼容cxf-->
+		<!-- <version>2.0.4.RELEASE</version> -->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -28,6 +29,21 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 移除嵌入式tomcat -->
+			<exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		<!-- 由于上面移除了tomcat，需要导入servletjar包 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-tomcat</artifactId>
+		    <!--打包的时候可以不用包进去，别的设施会提供。事实上该依赖理论上可以参与编译，测试，运行等周期。
+		       	 相当于compile，但是打包阶段做了exclude操作-->
+		    <scope>provided</scope>
 		</dependency>
 		<!-- devtools重新部署插件（不需要手动的重新部署） 重新部署耗时较多 -->
 		<!-- <dependency>
@@ -39,17 +55,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-		<!-- jstl标签依赖 -->
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-   			<artifactId>jstl</artifactId>
-		</dependency>
-		<!-- jsp引擎 -->
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-    		<artifactId>tomcat-embed-jasper</artifactId>
-    		<scope>provided</scope>
 		</dependency>
 		<!-- 整合mybatis、数据库连接、数据库连接池 -->
 		<dependency>
@@ -65,7 +70,7 @@
 		<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.0.18</version>
+            <version>1.1.16</version>
         </dependency>
         <!--JSON API -->
 		<dependency>
@@ -76,18 +81,24 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		<!-- spring boot的redis启动器 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
+		<!-- <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+            <version>3.2.4</version>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.jxls/jxls-jexcel -->
+<dependency>
+    <groupId>org.jxls</groupId>
+    <artifactId>jxls-jexcel</artifactId>
+    <version>1.0.6</version>
+</dependency>
+
+		
 	</dependencies>
 
 	<build>
+    <!-- 应与application.properties(或application.yml)中context-path保持一致 -->
+    <!-- <finalName>queqiao</finalName> -->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -141,5 +152,4 @@
         </resources> -->
 	</build>
 
-	<packaging>war</packaging>
 </project>

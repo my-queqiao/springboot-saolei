@@ -20,4 +20,8 @@ public class UserBizImpl implements UserBiz{
 		List<Users> list = userMapper.selectAll();
 		return list;
 	}
+	@Override
+	public void addUser(Users users) {
+		userMapper.insert(users);
+	}
 }

@@ -32,7 +32,7 @@ public class Test2 {
 				Class<? extends Annotation> annotationType = a.annotationType();//注解类型就是注解的class对象
 				//if如果该类，拥有@SxtAnnotation
 				if(annotationType == SxtService.class) {
-					//找到该包下，被@SxtAnnotation注解的类，将该类实例化存放到map中<className,实例>
+					//找到该包下，被@SxtService注解的类，将该类实例化存放到map中<className,实例>
 					instances.put(next, next.newInstance());
 				}
 			}

@@ -3,7 +3,11 @@ package com.example.demo;
 import java.io.Serializable;
 
 public class User implements Serializable{
-	private Integer id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer id = 11;
 	private String name;
 	private Integer age;
 	public Integer getId() {
@@ -29,9 +33,11 @@ public class User implements Serializable{
 		this.name = name;
 		this.age = age;
 	}
+	public User() {
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", age=" + age + "]";
 	}
-	
+
 }

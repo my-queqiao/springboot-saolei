@@ -16,6 +16,11 @@ public class IntercptSessionCheck extends HandlerInterceptorAdapter{
 			throws Exception {
 		if(handler instanceof HandlerMethod) {
 			HandlerMethod handlerMethod = (HandlerMethod)handler;
+			
+			// 
+			String name = handlerMethod.getMethod().getName();
+//			System.out.println("name:"+name);
+			
 			SecurityIgnoreHandler securityIgnoreHandler = handlerMethod.getMethodAnnotation(SecurityIgnoreHandler.class);
 			if(null != securityIgnoreHandler) {
 				return true;

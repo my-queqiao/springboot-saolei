@@ -23,4 +23,7 @@
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{liuyan,jdbcType=VARCHAR}, 
       #{time,jdbcType=TIMESTAMP})
   </insert>
+  <select id="getAll" resultMap="BaseResultMap">
+  		select * from liuyan
+  </select>
 </mapper>

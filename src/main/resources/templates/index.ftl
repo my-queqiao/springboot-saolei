@@ -56,9 +56,18 @@
 		<br>
 		<br>
 		<br>
-		<div class="row" style="    margin-top: 15%;">
-				<div id="" class="text-center">
-					<a style="color: aliceblue;" href="http://www.miitbeian.gov.cn" target="_blank">京ICP备18060161-1</a>
+		<div class="row" style="margin-top: 15%;">
+				<div id="" class="text-center" style="display:inline;">
+					<a style="color: aliceblue;text-decoration:underline;" 
+					href="${request.contextPath}/fanfankan" target="_blank">翻翻看游戏</a>
+				</div>
+				<div id="" class="text-center" style="display:inline;">
+					<a style="color: aliceblue;text-decoration:underline;" 
+					href="${request.contextPath}/fanfankan/saolei.zip" target="_blank" download="扫雷代码">扫雷代码</a>
+				</div>
+				<div id="" class="text-center" style="display:inline;">
+					<a style="color: aliceblue;text-decoration:underline;" 
+					href="${request.contextPath}/fanfankan/fanfankan.zip" target="_blank" download="扫雷代码">翻翻看代码</a>
 				</div>
 		</div>
 	</div>
@@ -169,7 +178,8 @@ var interval = setInterval(function(){
 			});
 	}
 	var leis;
-	getLeis(1);$("#leis").width(230);
+	getLeis(1);
+	$("#leis").width(230);
 	function getLeis(grade){
 		$("#leis").html('');
 		leis = 0;//点击等级之后，清零

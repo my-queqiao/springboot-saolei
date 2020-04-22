@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+  updateCheck="false">
+  <diskStore path="java.io.tmpdir" />
+           <defaultCache 
+           		eternal="false" 
+           		maxElementsInMemory="1000" 
+           		overflowToDisk="false" 
+           		diskPersistent="false"
+    			timeToIdleSeconds="0" 
+    			timeToLiveSeconds="600" 
+    			memoryStoreEvictionPolicy="LRU" />
+    			<!-- timeToIdleSeconds，单位秒。最后一次访问起，空闲时间超过这个值，就清空这个缓存    0表示没有限制-->
+    			<!-- timeToLiveSeconds，单位秒，允许该缓存存在的最长时间，超过这个值，就清空这个缓存     0表示没有限制-->
+    			<!-- name="demo" 是缓存策略，可以一张表对应一个缓存策略吗？有利于增删改这个表时，清空缓存？
+    				 其它表的对应service层，也有可能操作这个表
+    				 使用ehcache，可能要很小心。
+    			-->
+            <cache 
+	            name="demo" 
+	            eternal="false" 
+	            maxElementsInMemory="100" 
+	            overflowToDisk="false" 
+	            diskPersistent="false"
+	    		timeToIdleSeconds="0"  
+	    		timeToLiveSeconds="300" 
+	    		memoryStoreEvictionPolicy="LRU" />
+</ehcache>

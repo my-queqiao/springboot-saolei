@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  *	如果不在同一个包下，就需要配置文件中指出xml文件的位置。
  *	mybatis.mapper-locations=com/example/mappers/xml/*.xml
  */
-//@EnableCaching // 启用ehcache
+//@EnableCaching // 启用ehcache 
 @SpringBootApplication
-@MapperScan("com.example.mappers")
+@MapperScan("com.example.mappers") /** 测试开发分支*/
 public class SaoleiStart extends SpringBootServletInitializer{// extends SpringBootServletInitializer
 	public static void main(String[] args) {
 		SpringApplication.run(SaoleiStart.class, args);

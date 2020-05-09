@@ -32,17 +32,38 @@
 				&nbsp&nbsp
 			</div>
 		</div>
-		<div class="row ">
-				<div id="leiShuliang" class="col-xs-2 col-md-offset-4" style="color:red;font-family: 仿宋	;	">
-					数量：10
+		<div class="row" >
+			<div class="col-xs-4 col-xs-offset-4" >
+			<div class="row" >
+				<div id="leiShuliang" class="col-xs-4" style="color:green;font-family: 仿宋	;	">
+					剩余数量：10
 				</div>
-				<div id="shuaxin" class="col-xs-1" style="margin-left: -1.5%;">
+				<div id="dianjicishu" class="col-xs-4"  style="color:green;font-family: 仿宋	;	">
+					点击次数：0
+				</div>
+				<div id="shuaxin" class="col-xs-1" style="">
 					<img style='width: 25px;height: 25px;' src='img/76.jpg'/>
 				</div>
-				<div id="jishi" class="col-xs-2" style="color:red;font-family: 仿宋;">
-					已耗时：0秒
+				<div id="jishi" class="col-xs-3" style="color:green;font-family: 仿宋;">
+					耗时：0秒
 				</div>
+			</div>
+			</div>
 		</div>
+		<!--一个简单的bootstrap布局写法。 行中只能包含列，列再包含行，再包含列。 每一个行都平均分为12列。
+		<div class="container-fluid"><!--全屏-->
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-4"> // 向右偏移四列
+					<div class="row">
+						<div class="col-xs-3">td</div>
+						<div class="col-xs-3">td</div>
+						<div class="col-xs-3">td</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		-->
+		
 		<div class="row" style="height: 225px;">
 			<div id="leis" class="center-block" style="color: blue;font-family: 仿宋;">
 			</div>
@@ -50,12 +71,11 @@
 		<br>
 		<br>
 		<br>
-		<!--<div class="row" style="margin-top: 18%;">
+		<div class="row" style="margin-top: 18%;">
 			<p style="color: aliceblue;" target="_blank">
-				bug：1、有图片未展示就隐藏了（可以先点击其他方块，回头再点击该图片）。2、有时会发生未配对成功的图片不能隐藏的错误（可再点击该图片，把其当作未打开的方块）。
-				3、有时剩余数量不能正确计数
+				bug：如果点击太快，出现多个图片渐隐的情况，同时又在其中点击出来两个相同的图片，这种情况下，有的图片会显示不出来（但不影响其他功能）。
 			</p>
-		</div>-->
+		</div>
 	</div>
 </body>
 </html>
@@ -70,11 +90,12 @@ function out2(ob){
 
 var stopjishi = 0;//不为0时，停止计时
 var jishi = 0;
+var dianjicishu = 0;
 var interval = setInterval(function(){
 	if(stopjishi != 0){
 		return;
 	}
-	$("#jishi").text("已耗时："+jishi++ +"秒");
+	$("#jishi").text("耗时："+jishi++ +"秒");
 },1000);
 	function jibie(){
 		//alert(grade);
@@ -88,7 +109,7 @@ var interval = setInterval(function(){
 			if(stopjishi != 0){
 				return;
 			}
-			$("#jishi").text("已耗时："+jishi++ +"秒");
+			$("#jishi").text("耗时："+jishi++ +"秒");
 		},1000);
 		$("#jieshu").text(""); // 清空
 	}
@@ -136,6 +157,7 @@ var interval = setInterval(function(){
 	var more; // 存放多个已经关闭、或者说去掉了图片的方块
 	// 鼠标单击
 	function ol(ob){
+		$("#dianjicishu").text("点击次数："+ (++dianjicishu) );
 		$("#"+ob.id+" img").show();
 		// 1、没有上一个的记录，则记录当前信息，并且保持显示图片，再次点击该图片，还是打开
 		// 2、有上一个的记录。则与其比较，相同：都保持打开。不同：都关闭。
@@ -170,10 +192,11 @@ var interval = setInterval(function(){
 								var a = $("#leiShuliang").text();	
 					    		var a2 = a.split("：");
 					    		var number = a2[1];
-					    		$("#leiShuliang").text("数量："+(parseInt(number)-1));	
+					    		$("#leiShuliang").text("剩余数量："+(parseInt(number)-1));	
 					    		if( (parseInt(number)-1) == 0){
 					    			stopjishi = 1; // 停止计时
-					    			alert("胜利");
+					    			//alert("胜利");
+					    			$("#jieshu").text("胜利！");
 					    		}
 							}
 							// 不同

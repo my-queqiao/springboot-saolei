@@ -63,11 +63,7 @@
 				</div>
 				<div id="" class="text-center" style="display:inline;">
 					<a style="color: aliceblue;text-decoration:underline;" 
-					href="${request.contextPath}/fanfankan/saolei.zip" target="_blank" download="扫雷代码">扫雷代码</a>
-				</div>
-				<div id="" class="text-center" style="display:inline;">
-					<a style="color: aliceblue;text-decoration:underline;" 
-					href="${request.contextPath}/fanfankan/fanfankan.zip" target="_blank" download="扫雷代码">翻翻看代码</a>
+					href="${request.contextPath}/fanfankan/saolei.zip" target="_blank" download="扫雷代码">代码下载</a>
 				</div>
 		</div>
 	</div>

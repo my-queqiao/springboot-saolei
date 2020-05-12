@@ -38,6 +38,7 @@ public class FanFanKanController {
 	@SecurityIgnoreHandler
 	@RequestMapping("fanfankan")
 	public String fanfankan(HttpSession session){
+		System.out.println("翻翻看"); // dev，测试版本差异
 		/*// 先初始化，相当于每个线程中都new一个实例×，也可以用threadLocal修饰来实现
 		queue = new LinkedList<>();
 		list = new ArrayList<>(20);

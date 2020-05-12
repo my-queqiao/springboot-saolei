@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 //@EnableCaching // 启用ehcache 
 @SpringBootApplication
-@MapperScan("com.example.mappers") /** 测试开发分支*/
+@MapperScan("com.example.mappers") /** 测试开发分支dev*/
 public class SaoleiStart extends SpringBootServletInitializer{// extends SpringBootServletInitializer
 	public static void main(String[] args) {
 		SpringApplication.run(SaoleiStart.class, args);

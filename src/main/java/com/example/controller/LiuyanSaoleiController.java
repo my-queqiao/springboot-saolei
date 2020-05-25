@@ -30,6 +30,7 @@ public class LiuyanSaoleiController {
 	@SecurityIgnoreHandler
 	@RequestMapping("toLiuyanSaolei")
 	public String toLiuyan(){
+		System.out.println("测试dev差异");
 			return "liuyanSaolei";
 	}
 	
@@ -37,6 +38,7 @@ public class LiuyanSaoleiController {
 	@RequestMapping("liuyanSaolei")
 	@ResponseBody
 	public JSONObject liuyan(String liuyan){
+		System.out.println("测试dev差异");
 		Liuyan ly = new Liuyan();
 		ly.setLiuyan(liuyan);
 		ly.setTime(new Date());
@@ -50,6 +52,7 @@ public class LiuyanSaoleiController {
 	@RequestMapping("liuyanSaolei2")
 	@ResponseBody
 	public void liuyan2(HttpServletResponse response) throws IOException{
+		// 测试dev差异
 		String html = "<div style='color:green'>success</div>";
         PrintWriter pw = response.getWriter();
         pw.println(html);
@@ -59,6 +62,12 @@ public class LiuyanSaoleiController {
 	@RequestMapping("getLeaveMsgSaolei")
 	@ResponseBody
 	public JSONObject getLeaveMsg(){
+		/*
+		 *	测试dev差异 
+		 */
+		/**
+		 * 测试dev差异2
+		 */
 		List<Liuyan> lys = liuyanBiz.getAll();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		for(Liuyan ly:lys){

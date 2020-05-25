@@ -53,6 +53,7 @@ public class FanFanKanController {
 		List<String> list = new ArrayList<>(20);
 		create(list);
 		Collections.shuffle(list); // 洗牌
+		System.out.println("测试dev差异");
 		//Collections.shuffle(list,new Random(1L)); //如果指定种子则每次洗牌后的顺序都一样
 //		for(String i:list) {
 //			queue.offer(i); // offer先进，poll先出
@@ -68,6 +69,7 @@ public class FanFanKanController {
 		for(int i=1;i<=10;i++) {
 			list.add(String.valueOf(i));
 		}
+		System.out.println("测试dev差异");
 	}
 	@SecurityIgnoreHandler
 	@RequestMapping("getPicUrl")

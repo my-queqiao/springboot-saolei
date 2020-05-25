@@ -38,6 +38,7 @@ public class TestBean {
 	private int age;
 
 	public int getAge() {
+		System.out.println("测试dev差异");
 		return age;
 	}
 

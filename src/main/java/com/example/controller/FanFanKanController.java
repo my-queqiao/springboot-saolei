@@ -51,7 +51,7 @@ public class FanFanKanController {
 		*/ 
 		Queue<String> queue = new LinkedList<>(); 
 		List<String> list = new ArrayList<>(20);
-		create(list);
+		create222(list);
 		Collections.shuffle(list); // 洗牌
 		System.out.println("测试dev差异");
 		//Collections.shuffle(list,new Random(1L)); //如果指定种子则每次洗牌后的顺序都一样
@@ -62,7 +62,8 @@ public class FanFanKanController {
 		//System.out.println("queue:"+queue);
 		return "fanfankan";
 	}
-	public void create(List<String> list) {
+	
+	public void create222(List<String> list) {
 		for(int i=1;i<=10;i++) {
 			list.add(String.valueOf(i));
 		}
@@ -71,6 +72,7 @@ public class FanFanKanController {
 		}
 		System.out.println("测试dev差异");
 	}
+	
 	@SecurityIgnoreHandler
 	@RequestMapping("getPicUrl")
 	@ResponseBody
@@ -78,12 +80,21 @@ public class FanFanKanController {
 		JSONObject json = new JSONObject();
 		@SuppressWarnings("unchecked")
 		List<String> list = (List<String>)session.getAttribute("list");
-		json.put("list", list);
+		// 测试无效变更，行间加了回车，list前面加了空格。
+		
+		json.put("list",     list);
 		// 不使用队列了，改成一次刷新页面返回全部图片，这样生成图片url集合的方法也可以放到当前方法中，不用session了
 		// 每次点击方块时，都从队列中返回一个图片url，这样实现，前端实现功能时更困难。
 		// 如：点击方块时，还需要判断是否执行当前方法，大概由于请求当前方法是ajax请求，还有jquery提供的隐藏元素方法，可能也有同步、异步的问题
 		// 出现了很多我解决不了的问题，详见ftl文件中的bug描述
 //		String poll = queue.poll();
+		// 测试无效变更
+		/*
+		 * 测试无效变更
+		 */
+		/**
+		 * 测试无效变更
+		 */
 		return json;
 	}
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.biz.LiuyanBiz;
-import com.example.biz.UserBiz;
 import com.example.mappers.LiuyanMapper;
 import com.example.pojo.Liuyan;
 import com.example.pojo.Users;
@@ -19,8 +18,6 @@ import com.example.pojo.Users;
 public class LiuyanBizImpl implements LiuyanBiz{
 	@Autowired
 	private LiuyanMapper liuyanMapper;
-	@Autowired
-	private UserBiz userBiz;
 	
 	//@CacheEvict({"demo"}) // 
 	//@CacheEvict(value="demo",key="") // 清空demo策略下的，某个key值

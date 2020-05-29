@@ -26,7 +26,8 @@ public class StableReleaseCodeBizImpl implements StableReleaseCodeBiz{
 
 	@Override
 	public List<StableReleaseCode> findByTestingExampleId(Integer id) {
-		List<StableReleaseCode> list = stableReleaseCodeMapper.findByTestingExampleId(id);
+		List<StableReleaseCode> list = null;
+//				stableReleaseCodeMapper.findByTestingExampleId(id);
 		return list;
 	}
 	

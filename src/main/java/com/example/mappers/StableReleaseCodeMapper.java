@@ -1,7 +1,5 @@
 package com.example.mappers;
 
-import java.util.List;
-
 import com.example.pojo.StableReleaseCode;
 
 public interface StableReleaseCodeMapper {
@@ -16,6 +14,4 @@ public interface StableReleaseCodeMapper {
     int updateByPrimaryKeySelective(StableReleaseCode record);
 
     int updateByPrimaryKey(StableReleaseCode record);
-
-	List<StableReleaseCode> findByTestingExampleId(Integer id);
 }

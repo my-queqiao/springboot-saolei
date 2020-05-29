@@ -3,8 +3,6 @@ package com.example.pojo;
 public class StableReleaseCode {
     private Integer id;
 
-    private Integer testingExampleId;
-
     private String packageName;
 
     private String javabeanName;
@@ -25,14 +23,6 @@ public class StableReleaseCode {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getTestingExampleId() {
-        return testingExampleId;
-    }
-
-    public void setTestingExampleId(Integer testingExampleId) {
-        this.testingExampleId = testingExampleId;
     }
 
     public String getPackageName() {

@@ -1,7 +1,5 @@
 package com.example.mappers;
 
-import java.util.List;
-
 import com.example.pojo.TestingExample;
 
 public interface TestingExampleMapper {
@@ -16,8 +14,4 @@ public interface TestingExampleMapper {
     int updateByPrimaryKeySelective(TestingExample record);
 
     int updateByPrimaryKey(TestingExample record);
-
-	List<TestingExample> page(Integer search, int limit, Integer pageSize);
-
-	int findTotal(Integer search);
 }

@@ -1,9 +1,7 @@
 package com.example.pojo;
 
-public class TestingReleaseAddCode {
+public class ChangeCode {
     private Integer id;
-
-    private Integer testingExampleId;
 
     private String packageName;
 
@@ -25,14 +23,6 @@ public class TestingReleaseAddCode {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getTestingExampleId() {
-        return testingExampleId;
-    }
-
-    public void setTestingExampleId(Integer testingExampleId) {
-        this.testingExampleId = testingExampleId;
     }
 
     public String getPackageName() {

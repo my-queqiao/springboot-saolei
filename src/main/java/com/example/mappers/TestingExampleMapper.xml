@@ -55,17 +55,4 @@
     set testing_example_name = #{testingExampleName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="page" resultMap="BaseResultMap">
-    select * from testing_example 
-    <if test="search != null">
-    	where testing_example_name = #{search} 
-    </if>
-     limit #{limit} , #{pageSize}
-  </select>
-  <select id="findTotal" resultType="java.lang.Integer">
-    select count(*) from testing_example 
-    <if test="search != null">
-    	where testing_example_name = #{search} 
-    </if>
-  </select>
 </mapper>

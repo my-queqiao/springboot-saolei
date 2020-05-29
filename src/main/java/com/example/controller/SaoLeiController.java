@@ -35,6 +35,7 @@ public class SaoLeiController {
 	@SecurityIgnoreHandler
 	@RequestMapping("saolei")
 	public String saolei(){
+		System.out.println("测试MD5值");
 		return "ceshi";
 	}
 	/**
@@ -44,6 +45,12 @@ public class SaoLeiController {
 	@RequestMapping("getLeis")
 	@ResponseBody
 	public JSONObject sl(HttpSession session,int grade){
+		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+		String string = contextClassLoader.toString();
+		System.out.println("类加载器："+contextClassLoader);
+		System.out.println("类加载器str："+string);
+		Class<? extends ClassLoader> class1 = contextClassLoader.getClass();
+		System.out.println("类加载器class："+class1);
 		int fangkuaiNum = 0;
 		int leisNum = 0;
 		if(grade == 1) {

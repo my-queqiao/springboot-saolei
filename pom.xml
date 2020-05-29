@@ -92,17 +92,18 @@
     <artifactId>jxls-jexcel</artifactId>
     <version>1.0.6</version>
 </dependency>
-<!-- https://mvnrepository.com/artifact/org.gridkit.lab/jvm-attach-api -->
+<!-- https://mvnrepository.com/artifact/org.jacoco/org.jacoco.core -->
 <dependency>
-    <groupId>org.gridkit.lab</groupId>
-    <artifactId>jvm-attach-api</artifactId>
-    <version>1.5</version>
+    <groupId>org.jacoco</groupId>
+    <artifactId>org.jacoco.core</artifactId>
+    <version>0.8.5</version>
 </dependency>
+<!-- https://mvnrepository.com/artifact/org.jacoco/org.jacoco.report -->
 <dependency>
-      <groupId>javassist</groupId>
-      <artifactId>javassist</artifactId>
-      <version>3.12.1.GA</version>
-    </dependency>
+    <groupId>org.jacoco</groupId>
+    <artifactId>org.jacoco.report</artifactId>
+    <version>0.8.5</version>
+</dependency>
 
 		
 	</dependencies>
@@ -115,7 +116,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!--mybatis反向生成-->
+			<!--mybatis反向生成。用完后马上注掉，install时会执行-->
+		<!-- 
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -148,6 +150,13 @@
                         src/main/resources/mybatis-generator.xml</configurationFile>
                 </configuration>
             </plugin>
+            -->
+<!-- <plugin>
+<groupId>org.jacoco</groupId>
+<artifactId>jacoco-maven-plugin</artifactId>
+<version>0.8.3</version>
+</plugin> -->
+
 		</plugins>
 		<!-- 不需要指定位置
 		<resources>

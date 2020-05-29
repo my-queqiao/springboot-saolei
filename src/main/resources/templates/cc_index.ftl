@@ -21,7 +21,7 @@
     <script src="~/Scripts/table/Home/Index.js"></script>
     -->
 </head>
-<body class="container" style="background-color: aliceblue;">
+<body class="container-fiuled" style="background-color: aliceblue;">
     <div class="panel-body" style="padding-bottom:0px;">
 	    <div class="row text-center">
 	    	<span class="col-xs-12 " style="font-size: xx-large;">精准测试项目</span>
@@ -49,6 +49,7 @@
                 </form>
             </div>
         </div>
+        <!--  
         <div id="toolbar" class="btn-group">
             <button id="btn_add" type="button" class="btn btn-success">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -59,7 +60,7 @@
             <button id="btn_delete" type="button" class="btn btn-danger">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
-        </div>
+        </div>-->
         <table id="tb_departments"></table>
     </div>
     <script>
@@ -81,7 +82,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tb_departments').bootstrapTable({
-                url: '/accurateTesting/getAll',         //请求后台的URL（*）
+                url: '/changeCode/getAll',         //请求后台的URL（*）
                 method: 'get',                      //请求方式（*）
                 dataType: 'json',  
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -109,21 +110,41 @@
                 detailView: false,                   //是否显示父子表
                 showColumns: false,                  //是否显示所有的列
                 uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
-                showRefresh: true,                  //是否显示刷新按钮
+                showRefresh: false,                  //是否显示刷新按钮
                 clickToSelect: false,                //是否启用点击选中行
                 paginationPreText: "上一页",
                 paginationNextText: "下一页",
                 columns: [{
                     checkbox: true
-                }, {
+                }, 
+                /* {
                     field: 'id',
                     title: '主键id'
-                }, {
-                    field: 'testingExampleName',
-                    title: '测试用例名称', //align: 'center'
+                }, */
+                {
+                    field: 'packageName',
+                    title: '包路径', //align: 'center'
                 	//events: operateEvents1
-                	formatter: operateFormatter1
-                }, ]
+                	//formatter: operateFormatter1
+                }, 
+                {
+                    field: 'javabeanName',
+                    title: '类',
+                }, 
+                {
+                    field: 'methodName',
+                    title: '方法',
+                }, 
+                {
+                    field: 'paramType',
+                    title: '参数类型',
+                }, 
+                {
+                    field: 'changeOrNot',
+                    title: '变更类型',
+                    formatter: changeTypeFormatter
+                }, 
+                ]
             });
         };
 
@@ -153,6 +174,17 @@
     		'<a title="查看关联方法" onclick="getLinkMethod('+row.id+')"'
     		+'style="background-color: ;cursor: pointer;text-decoration:underline;">'+value+'</a>',  
     		].join('');
+    }
+    function changeTypeFormatter(value, row, index) {
+    	if(value == 1){
+	    	return ['<span>新增</span>',].join('');
+    	}else if(value == 2){
+	    	return ['<span>已删除</span>',].join('');
+    	}else if(value == 3){
+	    	return ['<span>修改</span>',].join('');
+    	}else{
+	    	return ['',].join('');
+    	}
     }
     function getLinkMethod(value){
     	// 请求后台，获取该测试用例关联的方法

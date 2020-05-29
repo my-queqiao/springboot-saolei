@@ -3,7 +3,6 @@
 <mapper namespace="com.example.mappers.StableReleaseCodeMapper">
   <resultMap id="BaseResultMap" type="com.example.pojo.StableReleaseCode">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="testing_example_id" jdbcType="INTEGER" property="testingExampleId" />
     <result column="package_name" jdbcType="VARCHAR" property="packageName" />
     <result column="javabean_name" jdbcType="VARCHAR" property="javabeanName" />
     <result column="method_name" jdbcType="VARCHAR" property="methodName" />
@@ -13,8 +12,8 @@
     <result column="testing_or_not" jdbcType="TINYINT" property="testingOrNot" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, testing_example_id, package_name, javabean_name, method_name, param_type, call_chain_order, 
-    change_or_not, testing_or_not
+    id, package_name, javabean_name, method_name, param_type, call_chain_order, change_or_not, 
+    testing_or_not
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,23 +26,18 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.pojo.StableReleaseCode">
-    insert into stable_release_code (id, testing_example_id, package_name, 
-      javabean_name, method_name, param_type, 
-      call_chain_order, change_or_not, testing_or_not
-      )
-    values (#{id,jdbcType=INTEGER}, #{testingExampleId,jdbcType=INTEGER}, #{packageName,jdbcType=VARCHAR}, 
-      #{javabeanName,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, #{paramType,jdbcType=VARCHAR}, 
-      #{callChainOrder,jdbcType=TINYINT}, #{changeOrNot,jdbcType=TINYINT}, #{testingOrNot,jdbcType=TINYINT}
-      )
+    insert into stable_release_code (id, package_name, javabean_name, 
+      method_name, param_type, call_chain_order, 
+      change_or_not, testing_or_not)
+    values (#{id,jdbcType=INTEGER}, #{packageName,jdbcType=VARCHAR}, #{javabeanName,jdbcType=VARCHAR}, 
+      #{methodName,jdbcType=VARCHAR}, #{paramType,jdbcType=VARCHAR}, #{callChainOrder,jdbcType=TINYINT}, 
+      #{changeOrNot,jdbcType=TINYINT}, #{testingOrNot,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.example.pojo.StableReleaseCode">
     insert into stable_release_code
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="testingExampleId != null">
-        testing_example_id,
       </if>
       <if test="packageName != null">
         package_name,
@@ -71,9 +65,6 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="testingExampleId != null">
-        #{testingExampleId,jdbcType=INTEGER},
-      </if>
       <if test="packageName != null">
         #{packageName,jdbcType=VARCHAR},
       </if>
@@ -100,9 +91,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.pojo.StableReleaseCode">
     update stable_release_code
     <set>
-      <if test="testingExampleId != null">
-        testing_example_id = #{testingExampleId,jdbcType=INTEGER},
-      </if>
       <if test="packageName != null">
         package_name = #{packageName,jdbcType=VARCHAR},
       </if>
@@ -129,8 +117,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.pojo.StableReleaseCode">
     update stable_release_code
-    set testing_example_id = #{testingExampleId,jdbcType=INTEGER},
-      package_name = #{packageName,jdbcType=VARCHAR},
+    set package_name = #{packageName,jdbcType=VARCHAR},
       javabean_name = #{javabeanName,jdbcType=VARCHAR},
       method_name = #{methodName,jdbcType=VARCHAR},
       param_type = #{paramType,jdbcType=VARCHAR},
@@ -139,8 +126,4 @@
       testing_or_not = #{testingOrNot,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="findByTestingExampleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select * from stable_release_code
-    where testing_example_id = #{id,jdbcType=INTEGER}
-  </select>
 </mapper>

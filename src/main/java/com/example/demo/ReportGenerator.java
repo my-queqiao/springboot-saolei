@@ -33,7 +33,7 @@ import org.jacoco.report.html.HTMLFormatter;
  * source highlighting will not work.
  */
 public class ReportGenerator {
-	private final static String projectLujing = "E:\\my-workspace\\springboot-saolei-lite";
+	private final static String projectLujing = "E:\\my-workspace\\springboot-saolei";
 	private final String title;
 
 	private final File executionDataFile;
@@ -49,6 +49,7 @@ public class ReportGenerator {
 	 * @param projectDirectory
 	 */
 	public ReportGenerator(final File projectDirectory) {
+		
 		this.title = projectDirectory.getName();
 //		this.executionDataFile = new File(projectDirectory, "jacoco-client.exec");
 		this.executionDataFile = new File(projectDirectory, "jacoco.exec");

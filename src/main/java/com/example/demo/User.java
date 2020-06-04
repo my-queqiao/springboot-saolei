@@ -1,43 +1,44 @@
 package com.example.demo;
 
-import java.io.Serializable;
+import java.io.IOException;
 
-public class User implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Integer id = 11;
-	private String name;
-	private Integer age;
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Integer getAge() {
-		return age;
-	}
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-	public User(Integer id, String name, Integer age) {
-		this.id = id;
-		this.name = name;
-		this.age = age;
-	}
-	public User() {
-	}
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", age=" + age + "]";
-	}
+import javassist.CannotCompileException;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.LoaderClassPath;
+import javassist.NotFoundException;
 
+public class User {
+	public static void main(String[] args) {
+		try {
+			String gen = System.getProperty("user.dir");
+			System.out.println("gen目录:"+gen);
+			ClassPool classPool = ClassPool.getDefault();
+			ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			classPool.appendClassPath(new LoaderClassPath(loader));
+//			classPool.appendClassPath(gen+"/target/classses/"); // notFoundException
+			CtClass ctclass = classPool.get("com.example.controller.SaoLeiController");
+			// modify class,like aop
+			for (CtMethod ctMethod : ctclass.getDeclaredMethods()) {
+				String methodName = ctMethod.getName();
+				String classname2 = ctclass.getName();
+				if (!ctMethod.isEmpty()) { // have method body
+					StringBuilder before = new StringBuilder();
+					before.append("System.err.println(\"=============="	
+							+ classname2 + "." + methodName	+ " ==============\");\n");
+					ctMethod.insertBefore(before.toString());
+				}
+			}
+			
+			//这里会将这个创建的类对象编译为.class文件
+			ctclass.writeFile(gen+"/target/classes");
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		} catch (CannotCompileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.annotation.SecurityIgnoreHandler;
 
+import net.sf.json.JSONObject;
+
 @Controller
 //@Scope("prototype") // singleton、prototype
-public class Index {
+public class Index_xinzeng {
 	/*
 	 * 默认首页
 	 */
 	@SecurityIgnoreHandler
-	@RequestMapping("/")
-	public String index() {
-		System.out.println("修改了当前方法");
-		return "index";
+	@RequestMapping("/xinzeng")
+	@ResponseBody
+	public JSONObject xinzeng() {
+		JSONObject json = new JSONObject();
+		json.put("success", true);
+		return json;
 	}
-	// 下面删除了一个方法
 }

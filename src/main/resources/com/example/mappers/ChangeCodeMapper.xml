@@ -3,16 +3,17 @@
 <mapper namespace="com.example.mappers.ChangeCodeMapper">
   <resultMap id="BaseResultMap" type="com.example.pojo.ChangeCode">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="git_url" jdbcType="VARCHAR" property="gitUrl" />
     <result column="package_name" jdbcType="VARCHAR" property="packageName" />
     <result column="javabean_name" jdbcType="VARCHAR" property="javabeanName" />
     <result column="method_name" jdbcType="VARCHAR" property="methodName" />
     <result column="param_type" jdbcType="VARCHAR" property="paramType" />
-    <result column="call_chain_order" jdbcType="TINYINT" property="callChainOrder" />
-    <result column="change_or_not" jdbcType="TINYINT" property="changeOrNot" />
+    <result column="change_type" jdbcType="TINYINT" property="changeType" />
+    <result column="method_body" jdbcType="VARCHAR" property="methodBody" />
     <result column="testing_or_not" jdbcType="TINYINT" property="testingOrNot" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, package_name, javabean_name, method_name, param_type, call_chain_order, change_or_not, 
+    id, git_url, package_name, javabean_name, method_name, param_type, change_type, method_body, 
     testing_or_not
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -26,18 +27,23 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.pojo.ChangeCode">
-    insert into change_code (id, package_name, javabean_name, 
-      method_name, param_type, call_chain_order, 
-      change_or_not, testing_or_not)
-    values (#{id,jdbcType=INTEGER}, #{packageName,jdbcType=VARCHAR}, #{javabeanName,jdbcType=VARCHAR}, 
-      #{methodName,jdbcType=VARCHAR}, #{paramType,jdbcType=VARCHAR}, #{callChainOrder,jdbcType=TINYINT}, 
-      #{changeOrNot,jdbcType=TINYINT}, #{testingOrNot,jdbcType=TINYINT})
+    insert into change_code (id, git_url, package_name, 
+      javabean_name, method_name, param_type, 
+      change_type, method_body, testing_or_not
+      )
+    values (#{id,jdbcType=INTEGER}, #{gitUrl,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, 
+      #{javabeanName,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR}, #{paramType,jdbcType=VARCHAR}, 
+      #{changeType,jdbcType=TINYINT}, #{methodBody,jdbcType=VARCHAR}, #{testingOrNot,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.pojo.ChangeCode">
     insert into change_code
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="gitUrl != null">
+        git_url,
       </if>
       <if test="packageName != null">
         package_name,
@@ -51,11 +57,11 @@
       <if test="paramType != null">
         param_type,
       </if>
-      <if test="callChainOrder != null">
-        call_chain_order,
+      <if test="changeType != null">
+        change_type,
       </if>
-      <if test="changeOrNot != null">
-        change_or_not,
+      <if test="methodBody != null">
+        method_body,
       </if>
       <if test="testingOrNot != null">
         testing_or_not,
@@ -64,6 +70,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gitUrl != null">
+        #{gitUrl,jdbcType=VARCHAR},
       </if>
       <if test="packageName != null">
         #{packageName,jdbcType=VARCHAR},
@@ -77,11 +86,11 @@
       <if test="paramType != null">
         #{paramType,jdbcType=VARCHAR},
       </if>
-      <if test="callChainOrder != null">
-        #{callChainOrder,jdbcType=TINYINT},
+      <if test="changeType != null">
+        #{changeType,jdbcType=TINYINT},
       </if>
-      <if test="changeOrNot != null">
-        #{changeOrNot,jdbcType=TINYINT},
+      <if test="methodBody != null">
+        #{methodBody,jdbcType=VARCHAR},
       </if>
       <if test="testingOrNot != null">
         #{testingOrNot,jdbcType=TINYINT},
@@ -91,6 +100,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.pojo.ChangeCode">
     update change_code
     <set>
+      <if test="gitUrl != null">
+        git_url = #{gitUrl,jdbcType=VARCHAR},
+      </if>
       <if test="packageName != null">
         package_name = #{packageName,jdbcType=VARCHAR},
       </if>
@@ -103,11 +115,11 @@
       <if test="paramType != null">
         param_type = #{paramType,jdbcType=VARCHAR},
       </if>
-      <if test="callChainOrder != null">
-        call_chain_order = #{callChainOrder,jdbcType=TINYINT},
+      <if test="changeType != null">
+        change_type = #{changeType,jdbcType=TINYINT},
       </if>
-      <if test="changeOrNot != null">
-        change_or_not = #{changeOrNot,jdbcType=TINYINT},
+      <if test="methodBody != null">
+        method_body = #{methodBody,jdbcType=VARCHAR},
       </if>
       <if test="testingOrNot != null">
         testing_or_not = #{testingOrNot,jdbcType=TINYINT},
@@ -117,16 +129,16 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.pojo.ChangeCode">
     update change_code
-    set package_name = #{packageName,jdbcType=VARCHAR},
+    set git_url = #{gitUrl,jdbcType=VARCHAR},
+      package_name = #{packageName,jdbcType=VARCHAR},
       javabean_name = #{javabeanName,jdbcType=VARCHAR},
       method_name = #{methodName,jdbcType=VARCHAR},
       param_type = #{paramType,jdbcType=VARCHAR},
-      call_chain_order = #{callChainOrder,jdbcType=TINYINT},
-      change_or_not = #{changeOrNot,jdbcType=TINYINT},
+      change_type = #{changeType,jdbcType=TINYINT},
+      method_body = #{methodBody,jdbcType=VARCHAR},
       testing_or_not = #{testingOrNot,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
   <select id="page" resultMap="BaseResultMap">
     select * from change_code
     <if test="search != null">
@@ -141,4 +153,19 @@
         where method_name = #{search,jdbcType=VARCHAR}
     </if>
   </select>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into change_code (git_url,package_name, javabean_name, 
+      method_name, param_type, change_type, method_body, testing_or_not)
+    values 
+    <foreach collection="list" index="index" item="item" separator=",">
+	    (#{item.gitUrl,jdbcType=VARCHAR},#{item.packageName,jdbcType=VARCHAR}, #{item.javabeanName,jdbcType=VARCHAR}, 
+	      #{item.methodName,jdbcType=VARCHAR}, #{item.paramType,jdbcType=VARCHAR}, #{item.changeType,jdbcType=TINYINT}, 
+	      #{item.methodBody,jdbcType=VARCHAR}, #{item.testingOrNot,jdbcType=TINYINT})
+    </foreach>
+  </insert>
+  <delete id="deleteByGitUrlAndBranchs" parameterType="java.lang.String">
+    delete from change_code
+    where git_url = #{gitUrlAndBranchs,jdbcType=VARCHAR}
+  </delete>
+  
 </mapper>

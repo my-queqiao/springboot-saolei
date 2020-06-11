@@ -31,16 +31,20 @@
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:-6px">
                         <label class="control-label col-sm-1" for="txt_search_departmentname">git仓库</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="txt_search_departmentname">
+                        <div class="col-sm-3" style="width:30%;">
+                            <input type="text" class="form-control" id="git_url" onBlur=getBranchs(this)>
                         </div>
                         <label class="control-label col-sm-1" for="txt_search_statu">稳定分支</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="txt_search_statu">
+                        <div class="col-sm-2" style="width:12%;">
+                            <select id="master_branch" class="form-control">
+								<option value=""></option>
+							</select>
                         </div>
                         <label class="control-label col-sm-1" for="txt_search_statu">测试分支</label>
-                        <div class="col-sm-2">
-                        	<input type="text" class="form-control" id="txt_search_statu">
+                        <div class="col-sm-2" style="width:12%;">
+                        	<select id="test_branch" class="form-control">
+								<option value=""></option>
+							</select>
                         </div>
                         <div class="col-sm-2" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">获取变更代码</button>
@@ -134,15 +138,25 @@
                 {
                     field: 'methodName',
                     title: '方法',
+                    formatter: methodNameFormatter
                 }, 
                 {
                     field: 'paramType',
                     title: '参数类型',
                 }, 
                 {
-                    field: 'changeOrNot',
+                    field: 'changeType',
                     title: '变更类型',
                     formatter: changeTypeFormatter
+                }, 
+                {
+                    field: 'testingOrNot',
+                    title: '是否已完成测试',
+                    formatter: testOrNotFormatter
+                }, 
+                {
+                    field: 'testingOrNot',
+                    title: '关联测试用例',
                 }, 
                 ]
             });
@@ -168,12 +182,42 @@
     	return [
     	'<div id="btn_detail" type="button" class="RoleOfA btn-default bt-select">详情/div>',  
     	].join('');
+    		'<a title="查看方法变更详情" onclick="method_body_details(\''+row.methodBody+'\')"'
     }*/
-    function operateFormatter1(value, row, index) {
+
+    var list = []; // 数组，存放bootstrap-table的行数据。
+    var ids = []; // 存放行数据的id
+    function methodNameFormatter(value, row, index) {
+    	for(j = 0; j < list.length; j++) {
+    		ids.push(list[j].id);
+    	}
+    	if(ids.indexOf(row.id) > -1){ // 有该元素
+    	}else{
+		    list.push(row);
+    	}
     	return [
-    		'<a title="查看关联方法" onclick="getLinkMethod('+row.id+')"'
-    		+'style="background-color: ;cursor: pointer;text-decoration:underline;">'+value+'</a>',  
-    		].join('');
+    		"<a title='查看方法变更详情' onclick='method_body_details("+row.id+")'"
+    		+"style='background-color: ;cursor: pointer;text-decoration:underline;'>"+value+"</a>",  
+    		].join("");
+    }
+    function method_body_details(id){
+    	for(j = 0; j < list.length; j++) {
+    		if(list[j].id == id){
+	    		alert(list[j].methodBody);
+	    		break;
+    		}
+    	}
+    }
+    // 方法传参为英文字母字符串
+    function paramTypeFormatter(value, row, index) {
+    	if(value.length > 30){
+    		var a = value.toString();
+	    	return ['<a title="查看完整的参数类型"	 onclick="allParams(\''+value+'\')">'
+	    		+'<span>'+value.substring(0,29)+'...'+'</span></a>',
+	    		].join('');
+    	}else{
+	    	return [value,].join('');
+    	}
     }
     function changeTypeFormatter(value, row, index) {
     	if(value == 1){
@@ -186,13 +230,16 @@
 	    	return ['',].join('');
     	}
     }
-    function getLinkMethod(value){
-    	// 请求后台，获取该测试用例关联的方法
-    	$.post('/accurateTesting/getLinkMethod?id='+value,
-				function(json){
-					//pics = json.list;
-    		alert("dsf");
-		});
+    function testOrNotFormatter(value, row, index) {
+    	if(value == 1){
+	    	return ['<span style="color:green";>已完成测试</span>',].join('');
+    	}else{
+	    	return ['<span style="color:red";>未测试</span>',].join('');
+    	}
+    }
+    function allParams(value){
+    	var a = value;
+    	//alert("");
     }
     window.operateEvents1 = {
     		'click .RoleOfA': function(e, value, row, index) {
@@ -300,12 +347,65 @@
             });
 
             $("#btn_query").click(function () {
-                $("#tb_departments").bootstrapTable('refresh');
+            	var gitUrl = $("#git_url").val();
+            	var masterBranch = $("#master_branch").val();
+            	var testBranch = $("#test_branch").val();
+            	if(gitUrl == ""){
+            		alert("git仓库不能为空");
+            		return;
+            	}
+            	if(masterBranch == "" || masterBranch == "0"){
+            		alert("稳定分支不能为空");
+            		return;
+            	}
+            	if(testBranch == "" || testBranch == "0"){
+            		alert("测试分支不能为空");
+            		return;
+            	}
+            	$.post('/changeCode/getChangeData?git_url='+gitUrl+'&master_branch='+masterBranch+'&test_branch='+testBranch,
+        				function(json){
+            				alert(json.res);
+            				if(json.success == true){
+	                			$("#tb_departments").bootstrapTable('refresh');
+            				}
+        		});
             });
         };
 
         return oInit;
     };
+    function getBranchs(obj){
+    	if(obj.value == ""){
+    		alert("git仓库不能为空");
+    		return;
+    	}
+    	//$.each(data,function(index,item){
+        //    var opt=$("<option value="+item.postId+">"+item.postName+"</option>");
+        //    $("#post").append(opt);
+        //});
+    	//var opt=$("<option value='0' selected>请选择</option><option value='2'>2</option>");
+        //$("#master_branch").append(opt);
+        
+    	
+    	$.post('/changeCode/getBranchList?git_url='+obj.value,
+				function(json){
+    				if(json.success == false){
+    					alert(json.res);
+    				}else{
+    					var data = json.list;
+    					var opt=$("<option value='0' selected>请选择</option>");
+    					var opt2=$("<option value='0' selected>请选择</option>");
+			            $("#master_branch").append(opt);
+    			        $("#test_branch").append(opt2);
+    					$.each(data,function(index,item){
+    			            var opt=$("<option value="+item+">"+item+"</option>");
+    			            var opt2=$("<option value="+item+">"+item+"</option>");
+    			            $("#master_branch").append(opt);
+    			            $("#test_branch").append(opt2);
+    			        });
+    				}
+		});
+    }
     </script>
     
     

@@ -32,7 +32,7 @@ public final class ExecutionDataClient {
 
 	private static final String ADDRESS = "39.106.188.246";
 
-	private static final int PORT = 8768;
+	private static final int PORT = 8766;
 
 	/**
 	 * Starts the execution data request.

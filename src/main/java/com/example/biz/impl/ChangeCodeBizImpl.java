@@ -35,4 +35,14 @@ public class ChangeCodeBizImpl implements ChangeCodeBiz{
 		return total;
 	}
 
+	@Override
+	public void insertBatch(List<ChangeCode> ccs) {
+		changeCodeMapper.insertBatch(ccs);
+	}
+
+	@Override
+	public void deleteByGitUrlAndBranchs(String gitUrlAndBranchs) {
+		changeCodeMapper.deleteByGitUrlAndBranchs(gitUrlAndBranchs);
+	}
+
 }

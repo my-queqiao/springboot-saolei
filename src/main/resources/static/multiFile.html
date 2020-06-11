@@ -5,6 +5,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- springboot，src/main/webapp下面的文件，install打包时不能打进jar包。
+当前static下面的文件，访问时没有限制 -->
 	<form action="fileUploadController" method="post" enctype="multipart/form-data">
 	上传文件<input type="file" name="filename"/><br/><!-- (MultipartFile filename)注意前后的参数名称一致 -->
 	<input type="submit" />

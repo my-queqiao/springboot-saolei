@@ -17,7 +17,11 @@ public interface ChangeCodeMapper {
 
     int updateByPrimaryKey(ChangeCode record);
 
+	int findTotal(Integer search);
+
+	void insertBatch(List<ChangeCode> ccs);
+
 	List<ChangeCode> page(Integer search, int limit, Integer pageSize);
 
-	int findTotal(Integer search);
+	void deleteByGitUrlAndBranchs(String gitUrlAndBranchs);
 }

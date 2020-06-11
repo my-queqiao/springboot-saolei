@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +36,7 @@ public class SaoLeiController {
 	@SecurityIgnoreHandler
 	@RequestMapping("saolei")
 	public String saolei(){
-		System.out.println("测试MD5值11");
+		System.out.println("测试MD5值1112");
 		return "ceshi";
 	}
 	/**

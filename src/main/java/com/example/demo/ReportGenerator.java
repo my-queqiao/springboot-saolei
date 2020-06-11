@@ -49,13 +49,12 @@ public class ReportGenerator {
 	 * @param projectDirectory
 	 */
 	public ReportGenerator(final File projectDirectory) {
-		
 		this.title = projectDirectory.getName();
-//		this.executionDataFile = new File(projectDirectory, "jacoco-client.exec");
-		this.executionDataFile = new File(projectDirectory, "jacoco.exec");
+		this.executionDataFile = new File(projectDirectory, "jacoco-client.exec");
+//		this.executionDataFile = new File(projectDirectory, "jacoco.exec");
 		this.classesDirectory = new File(projectDirectory, "\\");
 		this.sourceDirectory = new File(projectDirectory, "src\\main\\java");
-		this.reportDirectory = new File(projectDirectory, "coveragereport");
+		this.reportDirectory = new File(projectDirectory, "src\\main\\resources\\static\\coveragereport");
 	}
 
 	/**

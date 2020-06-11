@@ -121,7 +121,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<!--mybatis反向生成。用完后马上注掉，install时会执行-->
-		<!-- 
+			<!--   
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -154,17 +154,17 @@
                         src/main/resources/mybatis-generator.xml</configurationFile>
                 </configuration>
             </plugin>
-            -->
+           -->
 <!-- 字节码插桩 -->
 <plugin>
 	<groupId>com.jzcs</groupId>
-	<artifactId>myagentplugin-maven-plugin</artifactId>
+	<artifactId>chazhuang-maven-plugin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<executions>
 		<execution>
 		    <phase>compile</phase>
 		    <goals>
-		        <goal>count</goal>
+		        <goal>chazhuang</goal>
 		    </goals>
 		</execution>
 	</executions>

@@ -3,6 +3,8 @@ package com.example.pojo;
 public class ChangeCode {
     private Integer id;
 
+    private String gitUrl;
+
     private String packageName;
 
     private String javabeanName;
@@ -11,9 +13,9 @@ public class ChangeCode {
 
     private String paramType;
 
-    private Byte callChainOrder;
+    private Byte changeType;
 
-    private Byte changeOrNot;
+    private String methodBody;
 
     private Byte testingOrNot;
 
@@ -23,6 +25,14 @@ public class ChangeCode {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getGitUrl() {
+        return gitUrl;
+    }
+
+    public void setGitUrl(String gitUrl) {
+        this.gitUrl = gitUrl == null ? null : gitUrl.trim();
     }
 
     public String getPackageName() {
@@ -57,20 +67,20 @@ public class ChangeCode {
         this.paramType = paramType == null ? null : paramType.trim();
     }
 
-    public Byte getCallChainOrder() {
-        return callChainOrder;
+    public Byte getChangeType() {
+        return changeType;
     }
 
-    public void setCallChainOrder(Byte callChainOrder) {
-        this.callChainOrder = callChainOrder;
+    public void setChangeType(Byte changeType) {
+        this.changeType = changeType;
     }
 
-    public Byte getChangeOrNot() {
-        return changeOrNot;
+    public String getMethodBody() {
+        return methodBody;
     }
 
-    public void setChangeOrNot(Byte changeOrNot) {
-        this.changeOrNot = changeOrNot;
+    public void setMethodBody(String methodBody) {
+        this.methodBody = methodBody == null ? null : methodBody.trim();
     }
 
     public Byte getTestingOrNot() {

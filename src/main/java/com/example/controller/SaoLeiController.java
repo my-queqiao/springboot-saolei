@@ -219,6 +219,9 @@ public class SaoLeiController {
 				lei.setRoundNum(0);
 				lei.setLeiIds("");
 			}
+			System.out.println("================测试增加代码1=============");
+			System.out.println("================测试增加代码2=============");
+			System.out.println("================测试增加代码3=============");
 			/*
 			 * 再统计当前方块周围的所有id
 			 */
@@ -253,16 +256,14 @@ public class SaoLeiController {
 				strb4.append(currentId+everyHangNum+1);
 				strb4.append(",");
 			}
+			/**测试注释代码*/
 			//查询左（特殊位置id：31）
-			if(currentId >= 1 && (currentId-1)%everyHangNum != 0 ){//1、当前方块大于等于1。2、当前左边的方块不能被30整除
-				strb4.append(currentId-1);
-				strb4.append(",");
-			}
+//			if(currentId >= 1 && (currentId-1)%everyHangNum != 0 ){//1、当前方块大于等于1。2、当前左边的方块不能被30整除
+//				strb4.append(currentId-1);
+//				strb4.append(",");
+//			}
+			/**测试删除代码*/
 			//查询右（特殊位置id：30）
-			if(currentId+1 <= totalNum && (currentId)%everyHangNum != 0 ){//1、右边的方块小于等于480。2、当前方块不能被30整除。
-				strb4.append(currentId+1);
-				strb4.append(",");
-			}
 			String strb5 = strb4.toString();
 			String strb6 = strb5.substring(0, strb5.length()-1);//去除最后一个逗号，
 			//保存周围的ids

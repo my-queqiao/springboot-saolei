@@ -270,40 +270,6 @@ public class SaoLeiController {
 			lei.setRoundIds(strb6);
 		}
 	}
-	/** 废弃
-	 * 随机布雷 99个雷(高级)。
-	 * @param leis
-	 */
-	public void bulei(List<Lei> leis,int number,int count){
-		//int jishu = 0;
-		int shuliang = 0;
-		if(number == 0){
-			shuliang = 99;//高级
-		}else{
-			shuliang = number;
-		}
-		for(Lei lei:leis){
-			int random = (int)(Math.random()*10+1);//【1，11）
-			double random2 = (int)(Math.random()*10);//【0，10）
-			/*
-			 * 480个方块的id：1-480，对随机数取余，再用该余数和另外一个随机数比较。
-			 */
-			if(lei.getId() % random == random2 && lei.isHasLei() == false){
-				count++;
-				lei.setHasLei(true);
-				
-				if(count == shuliang){
-					return;
-				}
-			}
-		}
-		//测试得出，第一次布雷不足99个，大概需要三次布雷
-		if(count >= shuliang){
-			return;
-		}else{
-			bulei(leis, number,count);//此时number的值是多少？注意可能有错误
-		}
-	}
 	
 	
 	@RequestMapping("sendNumber")
@@ -458,5 +424,8 @@ public class SaoLeiController {
 			}
 		}
 		putLei2(leis2);
+	}
+	public void test22() {
+		System.out.println("测试新增方法");
 	}
 }

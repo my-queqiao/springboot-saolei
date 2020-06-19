@@ -404,17 +404,6 @@ public class SaoLeiController {
 	
 	
 	static Set<Integer> leis2 = new HashSet<Integer>(10);
-	public static void main(String[] args) {
-		/* 初级9*9，中级16*16，高级16*30.  地雷数量：10、40、99
-		 * 扫雷算法
-		 * 1、目的：把特定数目的雷，随机布到特定数量的雷区
-		 * 2、遍历每一个雷区布雷，这样好吗？
-		 * 3、遍历地雷，让每一个地雷随机得到一个雷区？ 我觉得这种比较好
-		 */
-		// 从雷区随机选取若干个（地雷数量）数量，
-		putLei2(leis2);
-		System.out.println(leis2);
-	}
 	public static void putLei2(Set<Integer> leis) {
 		for(int i=0;i<10;i++) {
 			int random = (int) (Math.random()*81+1); // [1,81]
@@ -427,5 +416,24 @@ public class SaoLeiController {
 	}
 	public void test22() {
 		System.out.println("测试新增方法");
+	}
+	/**
+ 其它几个重要的元字符的使用方式。   
+ 　　  
+  \s：用于匹配单个空格符，包括tab键和换行符；   　　  
+  \S：用于匹配除单个空格符之外的所有字符；   　　  
+  \d：用于匹配从0到9的数字；   　　  
+  \w：用于匹配字母，数字或下划线字符；   　　  
+  \W：用于匹配所有与\w不匹配的字符；   　　  
+  . ：用于匹配除换行符之外的所有字符
+     　　  
+  （说明：我们可以把\s和\S以及\w和\W看作互为逆运算） 
+	 */
+	public static void main(String[] args) {
+		String a ="public class User {\r\n" + 
+				"	public void test()   \r\n";
+		if( a.matches("[\\s\\S]*\\)\\W*") ) {
+			System.out.println("匹配了");
+		}
 	}
 }

@@ -1,11 +1,7 @@
 package com.example.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.annotation.SecurityIgnoreHandler;
 
 @Controller
@@ -21,4 +17,11 @@ public class Index {
 		return "index";
 	}
 	// 下面删除了一个方法
+	public void test() {
+		new Runnable() {
+			public void run() {
+				
+			}
+		};
+	}
 }

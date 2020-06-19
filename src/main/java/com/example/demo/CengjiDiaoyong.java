@@ -34,17 +34,17 @@ public class CengjiDiaoyong {
 			 if(end==str.length()-5){
 //				 System.out.println("结尾是.java 文件内容展示：");
 				 String content = readFileContent(str); // 获取文件内容
-				 if(null != content && content.contains("@Controller")) {
+				 if(null != content && content.contains("@Controller")) { // ceshi-1
 //					 System.out.println("content:"+content);
-					 if(str.contains("LiuyanSaoleiController.java")) {
+					 if(str.contains("LiuyanSaoleiController.java")) { // ceshi-2
 //						 System.out.println(content);
 						 System.out.println(str);
-						 String lujing = str.split("com")[1];
-						 String a = "com\\"+lujing;
-						 String replace = a.replace("\\", ".");
-						 String replace2 = replace.replace("..", ".");
-						 String substring = replace2.substring(0, replace2.length()-5);
-						 System.out.println(substring);
+						 String lujing = str.split("com")[1];  // ceshi-3
+						 String a = "com\\"+lujing; // ceshi0
+						 String replace = a.replace("\\", "."); // ceshi1
+						 String replace2 = replace.replace("..", "."); // ceshi2
+						 String substring = replace2.substring(0, replace2.length()-5); // ceshi3
+						 System.out.println(substring); // ceshi4
 						 Class<?> forName = Class.forName(substring); // 得到类的class对象
 						 /**通过类的注解，得到该类的父url*/
 						 Annotation[] annotations = forName.getAnnotations(); // 得到类的注解

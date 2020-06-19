@@ -80,8 +80,7 @@ public class ReportGenerator {
 
 	}
 
-	private void createReport(final IBundleCoverage bundleCoverage)
-			throws IOException {
+	private void createReport(final IBundleCoverage bundleCoverage) throws IOException {
 
 		// Create a concrete report visitor based on some supplied
 		// configuration. In this case we use the defaults

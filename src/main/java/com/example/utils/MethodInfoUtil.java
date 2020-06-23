@@ -5,22 +5,25 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
+/**
+ * 	该工具类使用说明：
+ * 	1、readFileContent(fileName) // 获得指定文件的内容
+ * 	2、getMethodInfo(content) // 入参是文件内容，返回方法名、参数、方法体
+ * @author tom
+ *
+ */
 public class MethodInfoUtil {
 	private static boolean quoteFlag = false, lineStarFlag = false;
 	private MethodInfoUtil() {
 	}
 	public static void main(String[] args) {
-		String fileContent = readFileContent("C:\\Users\\tom\\Desktop\\User.java");
-		List<MethodInfo> methodInfos = MethodInfoUtil.getMethodInfo(fileContent);
-		for (MethodInfo mi : methodInfos) {
-			System.out.println(mi.getMethodBody());
-			System.out.println("=========");
-		}
-//		System.out.println(fileContent);
+//		String fileContent = readFileContent("C:\\Users\\tom\\Desktop\\User.java");
+//		List<MethodInfo> methodInfos = MethodInfoUtil.getMethodInfo(fileContent);
 	}
 	public static List<MethodInfo> getMethodInfo(String fileContent) {
 		// "public void test() "例如判断该字符串是否匹配正则。
@@ -196,6 +199,110 @@ public class MethodInfoUtil {
             sb.append("\n");  
         return sb;  
     } 
+    /**
+	 * 	根据方法体变更分析结果，查看是否变更
+	 * @param changeAnalyse
+	 * @return 变更了返回true，否则返回false
+	 */
+	public static boolean changeOrNot(String changeAnalyse) {
+		String[] split = changeAnalyse.split("\n");
+		for (String s : split) {
+			if(s.startsWith("+") || s.startsWith("-") ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * 	返回两个方法体的对比结果。
+	 * @param methodBody	主分支
+	 * @param methodBody2	测试分支
+	 * @return 说明：+增加的一行，-减少的一行。没有+-则改行未改变。整个返回结果中行头都没有+-，则方法体未改变。
+	 */
+	public static String changeAnalyse(String methodBody,String methodBody2) {
+		// 根据换行符切割字符串
+		String[] split = methodBody.split("\n");
+		StringBuilder sb = new StringBuilder();
+		for (String s : split) {
+			if(!s.matches("\\s*")) { // 匹配多个空字符
+				sb.append(s+"\n"); // 字符串中有换行符，打印时才会看到换行效果
+			}
+		}
+		methodBody = sb.toString();
+		// 根据换行符切割字符串
+		String[] split2 = methodBody2.split("\n");
+		StringBuilder sb2 = new StringBuilder();
+		for (String s : split2) {
+			if(!s.matches("\\s*")) { // 匹配多个空字符，排除空行
+				sb2.append(s+"\n");
+			}
+		}
+		methodBody2 = sb2.toString();
+		// 比较差异，尝试按行比较
+		/** 先比较相同的行，记录行号。
+		 */
+		Map<Integer,String> masterMap = new HashMap<>();
+		Map<Integer,String> testMap = new HashMap<>();
+		Map<Integer,String> change = new HashMap<>();
+		String[] split3 = methodBody.split("\n");
+		String[] split4 = methodBody2.split("\n");
+		for (int i=0;i<split3.length;i++) {
+			String master = split3[i].trim();
+			masterMap.put(i, master);
+		}
+		for (int j=0;j<split4.length;j++) {
+			String test = split4[j].trim();
+			testMap.put(j, test);
+		}
+		// 如果主分支拥有测试分支改行代码：没改变。 不拥有：新增
+		for (int j=0;j<split4.length;j++) {
+			String test = split4[j].trim();
+			if(masterMap.values().contains(test)) {
+				change.put(j, test);
+			}else {
+				change.put(j, "+"+test);
+			}
+		}
+		// 如果测试分支拥有主分支改行代码：没改变。 不拥有：删除
+		for (int i=0;i<split3.length;i++) {
+			String master = split3[i].trim();
+			if(testMap.values().contains(master)) {
+				//change.put(i, master);
+			}else {
+				if(change.containsKey(i)) {
+					// 当前位置有值，依次后移
+					mapHouyi(change, i);
+					change.put(i, "-"+master);
+				}else {
+					change.put(i, "-"+master);
+				}
+			}
+		}
+		// 先把该两个分支下，同方法名、同参数的两个方法体的比较结果，打印出来
+		Collection<String> values = change.values();
+		StringBuilder sbsb = new StringBuilder();
+		for(String s : values) {
+			sbsb.append(s+"\n");
+		}
+		//System.out.println("查看最终结果："+sbsb.toString());
+		return sbsb.toString();
+	}
+	/**
+	 * Map<Integer,String>集合，某处有数据，那么该位置及后面的数据全部根据key+1后移。从最后面开始，依次后移
+	 * @param change 
+	 * @param i	如果i处有值，那么后面的值全部后移一个
+	 */
+	public static void mapHouyi(Map<Integer,String> change,int i) {
+		if(change.containsKey(i)) {
+			Set<Integer> keySet = change.keySet();
+			for (int j = keySet.size()-1;j >= 0 ; j--) {
+				change.put(j+1, change.get(j));
+				if(i == j) { // 移完了
+					return;
+				}
+			}
+		}
+	}
 }
 
 

@@ -40,12 +40,12 @@ public class TestMethodInfoUtil {
 				if(mi.getMethodName().equals(mi2.getMethodName())&&mi.getParamType().equals(mi2.getParamType()) ) { // 方法名、参数相同
 					String methodBody = mi.getMethodBody(); // 主分支
 					String methodBody2 = mi2.getMethodBody(); // test分支
-					String changeAnalyse = MethodInfoUtil.changeAnalyse(methodBody, methodBody2);
-//					System.out.println("changeAnalyse:"+changeAnalyse);
-					boolean changeOrNot = MethodInfoUtil.changeOrNot(changeAnalyse);
+					boolean changeOrNot = MethodInfoUtil.changeOrNot(methodBody,methodBody2);
 					if(changeOrNot) {
 						String methodName = mi2.getMethodName();
 						System.out.println(methodName+",该方法改变了");
+						String changeAnalyse = MethodInfoUtil.changeAnalyse(methodBody, methodBody2);
+						System.out.println("changeAnalyse:"+changeAnalyse);
 					}else {
 						String methodName = mi2.getMethodName();
 						System.out.println(methodName+",该方法未改变");

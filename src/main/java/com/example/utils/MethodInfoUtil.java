@@ -14,6 +14,11 @@ import java.util.Set;
  * 	该工具类使用说明：
  * 	1、readFileContent(fileName) // 获得指定文件的内容
  * 	2、getMethodInfo(content) // 入参是文件内容，返回方法名、参数、方法体
+ * 
+ * 	// 以下方法，入参需要源文件的内容（含换行符）
+ *	3、changeOrNot(methodBody, methodBody2); // 查看是否变更
+ * 	4、changeAnalyse(methodBody, methodBody2); // 获得两个方法体的变更详情，入参依次是稳定版、测试版：{方法体}
+ * 
  * @author tom
  *
  */
@@ -200,32 +205,18 @@ public class MethodInfoUtil {
         return sb;  
     } 
     /**
-	 * 	根据方法体变更分析结果，查看是否变更
-	 * @param changeAnalyse
-	 * @return 变更了返回true，否则返回false
-	 */
-	public static boolean changeOrNot(String changeAnalyse) {
-		String[] split = changeAnalyse.split("\n");
-		for (String s : split) {
-			if(s.startsWith("+") || s.startsWith("-") ) {
-				return true;
-			}
-		}
-		return false;
-	}
-	/**
-	 * 	返回两个方法体的对比结果。
-	 * @param methodBody	主分支
-	 * @param methodBody2	测试分支
-	 * @return 说明：+增加的一行，-减少的一行。没有+-则改行未改变。整个返回结果中行头都没有+-，则方法体未改变。
-	 */
-	public static String changeAnalyse(String methodBody,String methodBody2) {
+     * 	查看方法体是否变更了
+     * @param methodBody	稳定分支
+     * @param methodBody2	测试分支
+     * @return 变更了返回true，未变更返回false
+     */
+	public static boolean changeOrNot(String methodBody,String methodBody2) {
 		// 根据换行符切割字符串
 		String[] split = methodBody.split("\n");
 		StringBuilder sb = new StringBuilder();
 		for (String s : split) {
 			if(!s.matches("\\s*")) { // 匹配多个空字符
-				sb.append(s+"\n"); // 字符串中有换行符，打印时才会看到换行效果
+				sb.append(s.trim()); // 字符串中有换行符，打印时才会看到换行效果
 			}
 		}
 		methodBody = sb.toString();
@@ -234,38 +225,87 @@ public class MethodInfoUtil {
 		StringBuilder sb2 = new StringBuilder();
 		for (String s : split2) {
 			if(!s.matches("\\s*")) { // 匹配多个空字符，排除空行
+				sb2.append(s.trim());
+			}
+		}
+		methodBody2 = sb2.toString();
+		if(methodBody.equals(methodBody2)) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+	/**
+	 * 	返回两个方法体的对比结果。
+	 * @param methodBody	主分支	（入参行与行之间需要有换行符\n）
+	 * @param methodBody2	测试分支
+	 * @return 说明：+增加的一行，-减少的一行。没有+-则改行未改变。整个返回结果中行头都没有+-，则方法体未改变。
+	 * 
+	 * int a =1;
+		if(){
+			int a =1; // 这四行代码，如果主分支中只少了这一行代码，那么结果是这两个方法相同。即：如果方法体中存在一样的代码行，会产生bug
+			}
+	 */
+	public static String changeAnalyse(String methodBody,String methodBody2) {
+		/**1、去除空行	*/
+		String[] split = methodBody.split("\n");
+		StringBuilder sb = new StringBuilder();
+		for (String s : split) {
+			if(!s.matches("\\s*")) { // 匹配多个空字符
+				sb.append(s+"\n"); // 字符串中有换行符，打印时才会看到换行效果
+			}
+		}
+		methodBody = sb.toString();
+		// 
+		String[] split2 = methodBody2.split("\n");
+		StringBuilder sb2 = new StringBuilder();
+		for (String s : split2) {
+			if(!s.matches("\\s*")) { // 匹配多个空字符，排除空行
 				sb2.append(s+"\n");
 			}
 		}
 		methodBody2 = sb2.toString();
-		// 比较差异，尝试按行比较
-		/** 先比较相同的行，记录行号。
-		 */
+		/** 2、两个方法体，分别放入一个map<第几行，行代码>集合中	*/
 		Map<Integer,String> masterMap = new HashMap<>();
 		Map<Integer,String> testMap = new HashMap<>();
 		Map<Integer,String> change = new HashMap<>();
 		String[] split3 = methodBody.split("\n");
 		String[] split4 = methodBody2.split("\n");
 		for (int i=0;i<split3.length;i++) {
-			String master = split3[i].trim();
+			String master = split3[i].trim(); // 去除前后空格
+			// 同一个方法体内重复行问题
+//			if(masterMap.values().contains(master) && !master.equals("{") && !master.equals("}")
+//					&& !master.equals("(") && !master.equals(")")) {
+//				master = master+"℃";
+//			}
+			// 放入map
 			masterMap.put(i, master);
 		}
 		for (int j=0;j<split4.length;j++) {
 			String test = split4[j].trim();
+			// 同一个方法体内重复行问题
+//			if(testMap.values().contains(test) && !test.equals("{") && !test.equals("}")
+//					&& !test.equals("(") && !test.equals(")")) {
+//				test = test+"℃";
+//			}
+			// 放入map
 			testMap.put(j, test);
 		}
+		/**互相比较，找出未改变、新增、删除的行放入一个新的map中	*/
 		// 如果主分支拥有测试分支改行代码：没改变。 不拥有：新增
-		for (int j=0;j<split4.length;j++) {
-			String test = split4[j].trim();
+		Object[] arrayTest = testMap.values().toArray();
+		for (int j=0;j<arrayTest.length;j++) {
+			String test = ( (String)arrayTest[j] ).trim();
 			if(masterMap.values().contains(test)) {
-				change.put(j, test);
+				change.put(j, " "+test);
 			}else {
 				change.put(j, "+"+test);
 			}
 		}
 		// 如果测试分支拥有主分支改行代码：没改变。 不拥有：删除
-		for (int i=0;i<split3.length;i++) {
-			String master = split3[i].trim();
+		Object[] arrayMaster = masterMap.values().toArray();
+		for (int i=0;i<arrayMaster.length;i++) {
+			String master = ( (String)arrayMaster[i] ).trim();
 			if(testMap.values().contains(master)) {
 				//change.put(i, master);
 			}else {
@@ -278,13 +318,12 @@ public class MethodInfoUtil {
 				}
 			}
 		}
-		// 先把该两个分支下，同方法名、同参数的两个方法体的比较结果，打印出来
+		// 返回记录的差异
 		Collection<String> values = change.values();
 		StringBuilder sbsb = new StringBuilder();
 		for(String s : values) {
 			sbsb.append(s+"\n");
 		}
-		//System.out.println("查看最终结果："+sbsb.toString());
 		return sbsb.toString();
 	}
 	/**
